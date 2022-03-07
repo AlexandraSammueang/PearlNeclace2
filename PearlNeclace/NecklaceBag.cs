@@ -25,7 +25,39 @@ namespace PearlNecklace
             }
         }
 
-        public int Count() => _bagOfNecklaces.Count;    
+        public int Count() => _bagOfNecklaces.Count;
+
+        public IPearl MostExpensivePearl
+        {
+            get
+            {
+                var mostExpensivePrice = decimal.MinValue;
+                IPearl mostExpensivePearl = null;
+                foreach (var necklace in _bagOfNecklaces)
+                {
+                    if (necklace.MostExpensivePearl.Price > mostExpensivePrice)
+                    {
+                        mostExpensivePrice = necklace.MostExpensivePearl.Price;
+                        mostExpensivePearl = necklace.MostExpensivePearl;
+                    }
+                }
+                return mostExpensivePearl;
+            }
+        }
+
+        public int CountPearls(PearlColor? color = null)
+        {
+            var count = 0;  
+            foreach (var p in _bagOfNecklaces)
+            {
+                if (!color.HasValue)
+                    count += p.Count();
+
+                else if (color.HasValue)
+                    count += p.Count(color);
+            }
+            return count;   
+        }
 
         public override string ToString()
         {
@@ -35,6 +67,13 @@ namespace PearlNecklace
             {
                 sRet += $"Necklace nr {++c}:\n{item}\n";
             }
+            sRet += $"\nNumber of Necklaces: {Count()}";
+            sRet += $"\nNumber of Pearls: {CountPearls()}";
+            sRet += $"\nNumber of {PearlColor.Black} Pearls: {CountPearls(PearlColor.Black)}";
+            sRet += $"\nMost expensive pearls in the bag:\n{MostExpensivePearl}";
+
+            sRet += $"\nTotal value of Bag: {Price}";
+
             return sRet;
         }
 
