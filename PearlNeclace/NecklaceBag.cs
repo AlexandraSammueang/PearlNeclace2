@@ -59,7 +59,7 @@ namespace PearlNecklace
         {
             string fn = fname(filename);
             using (FileStream fs = File.Create(fn))
-            using (Stream ds = new GZipStream(fs, CompressionMode.Decompress))
+            using (Stream ds = new GZipStream(fs, CompressionMode.Compress))
             using (TextWriter writer = new StreamWriter(fs))
             {
                 writer.WriteLine(this);
