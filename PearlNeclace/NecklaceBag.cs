@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO.Compression;
 
 namespace PearlNecklace
 {
@@ -58,6 +59,7 @@ namespace PearlNecklace
         {
             string fn = fname(filename);
             using (FileStream fs = File.Create(fn))
+            using (Stream ds = new GZipStream(fs, CompressionMode.Decompress))
             using (TextWriter writer = new StreamWriter(fs))
             {
                 writer.WriteLine(this);
